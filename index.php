@@ -1,49 +1,59 @@
 <?php
 
-class Movie
-{
-    public $title;
-    public $language;
-    public $genre;
-    public $review;
-    public $vote;
+include_once __DIR__ . '/models/Movie.php';
+include_once __DIR__ . '/data/db.php';
 
-    public function __construct($title, $language, $genre, $review, $vote)
-    {
-        $this->title = $title;
-        $this->language = $language;
-        $this->genre = $genre;
-        $this->review = $review;
-        $this->vote = $vote;
-    }
+$moviesList = [];
 
-    public function getReview($max = 20)
-    {
-        return strlen($this->review) > $max ? substr($this->review, 0, $max) . '...' : $this->review;
-    }
-
-    public function getVote()
-    {
-        return "$this->vote/10";
-    }
+foreach ($movies as $movie) {
+    $moviesList[] = new Movie($movie['title'], $movie['language'], $movie['genre'], $movie['review'], $movie['vote']);
 }
 
-class Genre
-{
-    public $name;
+?>
 
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-}
+<!DOCTYPE html>
+<html lang="it">
 
-$fantasy = new Genre('Fantasy');
-$thriller = new Genre('Thriller');
-$distopico = new Genre('Distopico');
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <!-- Bootstrap -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css' integrity='sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==' crossorigin='anonymous' />
+</head>
 
-$the_martians = new Movie('The Martians', 'en-EN', [$fantasy, $thriller], 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam itaque est recusandae, et corporis explicabo distinctio obcaecati modi similique ducimus eveniet, sunt eaque minus nam aperiam? Necessitatibus nobis qui repellat.', '7');
-$fight_club = new Movie('Fight Club', 'en-US', [$distopico, $thriller], 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam itaque est recusandae, et corporis explicabo distinctio obcaecati modi similique ducimus eveniet, sunt eaque minus nam aperiam? Necessitatibus nobis qui repellat.', '9');
+<body>
+    <header class="bg-black text-center text-white py-4">
+        <h1>Movies</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row my-4">
+                <?php foreach ($moviesList as $movie) : ?>
+                    <div class="col">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h3 class="text-center"><?= $movie->title ?></h3>
+                            </li>
+                            <li class="list-group-item">
+                                <h5><?= $movie->language ?></h5>
+                            </li>
+                            <li class="list-group-item">
+                                <h4><?= $movie->genres ?></h4>
+                            </li>
+                            <li class="list-group-item">
+                                <p><?= $movie->review ?></p>
+                            </li>
+                            <li class="list-group-item">
+                                <h5><?= $movie->vote ?></h5>
+                            </li>
+                        </ul>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </main>
+</body>
 
-var_dump($the_martians);
-var_dump($fight_club);
+</html>
