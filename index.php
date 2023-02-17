@@ -1,12 +1,18 @@
 <?php
 
 include_once __DIR__ . '/models/Movie.php';
-include_once __DIR__ . '/data/db.php';
+include_once __DIR__ . '/data/db_movies.php';
 
 $moviesList = [];
 
 foreach ($movies as $movie) {
     $moviesList[] = new Movie($movie['title'], $movie['language'], $movie['genre'], $movie['review'], $movie['vote']);
+}
+
+$lol = ['ok', 'ciao'];
+
+foreach ($lol as $lo) {
+    echo ${$lo} = $lo;
 }
 
 ?>
@@ -29,7 +35,7 @@ foreach ($movies as $movie) {
     </header>
     <main>
         <div class="container">
-            <div class="row my-4">
+            <div class="row row-cols-3 my-4 g-4">
                 <?php foreach ($moviesList as $movie) : ?>
                     <div class="col">
                         <ul class="list-group">

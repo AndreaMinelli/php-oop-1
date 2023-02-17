@@ -1,7 +1,4 @@
 <?php
-
-include __DIR__ . '/../data/db_genres.php';
-
 class Movie
 {
     public $title;
